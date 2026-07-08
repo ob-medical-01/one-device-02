@@ -210,11 +210,12 @@ const USERS = [
   {username: "Kimlay", password: "lay123", startDate: "2026-09-06", durationDays: 367},
   {username: "Sothyrak", password: "Sothyrak123456", startDate: "2026-24-06", durationDays: 367},
   {username: "LyNa", password: "Lyna200497", startDate: "2026-25-06", durationDays: 457},
-  {username: "Simnatt", password: "570033", startDate: "2026-06-07", durationDays: 457},
-  {username: "Yoeurtyen", password: "Yen0709", startDate: "2026-06-07", durationDays: 457},
-  {username: "Uklonghor", password: "848550", startDate: "2026-07-07", durationDays: 457},
-  {username: "Seyha", password: "@seyha999", startDate: "2026-07-07", durationDays: 457},
-  {username: "Bunheang", password: "heang168", startDate: "2026-08-07", durationDays: 457},
+  {username: "Simnatt", password: "570033", startDate: "2026-06-07", durationDays: 367},
+  {username: "Yoeurtyen", password: "Yen0709", startDate: "2026-06-07", durationDays: 367},
+  {username: "Uklonghor", password: "848550", startDate: "2026-07-07", durationDays: 367},
+  {username: "Seyha", password: "@seyha999", startDate: "2026-07-07", durationDays: 367},
+  {username: "Bunheang", password: "heang168", startDate: "2026-08-07", durationDays: 367},
+  {username: "Sovannarom", password: "7344440", startDate: "2026-08-07", durationDays: 367},
 
   
   //------laboratory accounts-----
