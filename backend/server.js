@@ -227,7 +227,7 @@ const USERS = [
   {username: "Veasna", password: "211220", startDate: "2026-06-08", durationDays: 367},
   {username: "Lyboromey", password: "mey12345", startDate: "2026-20-08", durationDays: 367},
   {username: "SOEURAVY", password: "300594", startDate: "2026-27-08", durationDays: 367},
-
+  {username: "oung_ekreach", password: "20010719", startDate: "2026-03-09", durationDays: 367},
 
   
   //------laboratory accounts-----
