@@ -86,7 +86,7 @@ const USERS = [
   { username: "Chandara", password: "dara@2025", startDate: "2025-11-11", durationDays: 1200 },
   { username: "Kimleng", password: "kimleng@2025", startDate: "2025-11-11", durationDays: 1200 },
   { username: "Lyheang", password: "lyheang@2025", startDate: "2025-11-11", durationDays: 600 },
-  { username: "Sovan", password: "sovan@2025", startDate: "2025-11-11", durationDays: 365 },
+  { username: "Sovan", password: "sovan@2025", startDate: "2025-11-11", durationDays: 400 },
   { username: "Seavmey", password: "seavmey@2025", startDate: "2025-11-11", durationDays: 365 },
   { username: "Sokhethida", password: "thida@2025", startDate: "2025-11-11", durationDays: 1200 },
   { username: "Sokla", password: "sokla@2025", startDate: "2025-11-11", durationDays: 365 },
