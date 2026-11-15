@@ -120,7 +120,7 @@ const USERS = [
   { username: "Boline", password: "boline@151225", startDate: "2025-11-15", durationDays: 365 },
   { username: "Rangsey", password: "sey@151225", startDate: "2025-11-15", durationDays: 365 },
   { username: "Sovannarath", password: "rath@151225", startDate: "2025-11-15", durationDays: 365 },
-  { username: "Channak", password: "nak@151225", startDate: "2025-11-15", durationDays: 365 },
+  { username: "Channak", password: "nak@151225", startDate: "2025-11-15", durationDays: 800 },
   { username: "Pichly", password: "pichly@151225", startDate: "2025-11-16", durationDays: 365 },
   { username: "Soyvet", password: "vet@151225", startDate: "2025-11-16", durationDays: 365 },
   { username: "Piseth", password: "seth@151225", startDate: "2025-11-16", durationDays: 365 },
