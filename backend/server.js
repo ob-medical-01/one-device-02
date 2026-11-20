@@ -34,6 +34,23 @@ function parseUserAgent(ua) {
   return { browser, os };
 }
 
+// === Helper: បង្កើត Key សម្គាល់គណនីនីមួយៗ (Username + Password) ===
+function getUserKey(username, password) {
+  return `${username}:::${password}`;
+}
+
+// === Helper: ស្វែងរក User តាមរយៈ Username និង Token (សម្រាប់គណនីដែលមាន Username ដូចគ្នា) ===
+function findUserByUsernameAndToken(db, username, token) {
+  if (!username || !token) return null;
+  for (const key in db.users) {
+    const u = db.users[key];
+    if (u.username === username && u.sessionToken === token) {
+      return u;
+    }
+  }
+  return null;
+}
+
 // === Database Helper ===
 function loadDB() {
   if (!fs.existsSync(DATA_FILE)) {
@@ -143,10 +160,10 @@ const USERS = [
   { username: "Chheang", password: "Chheang7272", startDate: "2026-1-28", durationDays: 366 },
   { username: "Keyla", password: "262626", startDate: "2026-2-3", durationDays: 366 },
   { username: "Sokchan", password: "chan@168", startDate: "2026-2-3", durationDays: 366 },
-   { username: "Puthea", password: "puthea@168", startDate: "2026-2-3", durationDays: 200},
-   { username: "Vandy", password: "vandy@1280", startDate: "2026-2-3", durationDays: 168},
-    { username: "Smile", password: "Smile@12345", startDate: "2026-2-14", durationDays: 168},
-   { username: "K.Malin", password: "840876", startDate: "2026-2-21", durationDays: 365},
+  { username: "Puthea", password: "puthea@168", startDate: "2026-2-3", durationDays: 200},
+  { username: "Vandy", password: "vandy@1280", startDate: "2026-2-3", durationDays: 168},
+  { username: "Smile", password: "Smile@12345", startDate: "2026-2-14", durationDays: 168},
+  { username: "K.Malin", password: "840876", startDate: "2026-2-21", durationDays: 365},
   { username: "Malin.K", password: "113268", startDate: "2026-2-21", durationDays: 365},
   { username: "Soksovannaro", password: "66664444@@", startDate: "2026-2-21", durationDays: 365},
   { username: "Lyheng", password: "1", startDate: "2026-2-21", durationDays: 365},
@@ -156,17 +173,17 @@ const USERS = [
   { username: "Chuncheu", password: "cheu@9999", startDate: "2026-2-22", durationDays: 1300},
   { username: "SeangE1", password: "E@9999", startDate: "2026-2-22", durationDays: 366},
   { username: "SeangE2", password: "E@9999", startDate: "2026-2-22", durationDays: 366},
-   { username: "VONG123", password: "vong123", startDate: "2026-2-22", durationDays: 366},
-   { username: "Vann_Sotheara", password: "Sotheara16", startDate: "2026-2-22", durationDays: 366},
+  { username: "VONG123", password: "vong123", startDate: "2026-2-22", durationDays: 366},
+  { username: "Vann_Sotheara", password: "Sotheara16", startDate: "2026-2-22", durationDays: 366},
   { username: "Cheataso", password: "22datefeb2k26kh", startDate: "2026-2-22", durationDays: 366},
   { username: "Min_Soeurn", password: "LOVEYOU", startDate: "2026-2-22", durationDays: 366},
   { username: "BLOOD", password: "R078688892k", startDate: "2026-2-22", durationDays: 366},
-{ username: "Dara", password: "1989", startDate: "2026-2-25", durationDays: 900},
+  { username: "Dara", password: "1989", startDate: "2026-2-25", durationDays: 900},
   { username: "Jesa", password: "jesa178", startDate: "2026-3-03", durationDays: 366},
   { username: "Semsarith", password: "Babymilo123", startDate: "2026-3-03", durationDays: 366},
   { username: "Phea", password: "phea168", startDate: "2026-3-03", durationDays: 390},
-{ username: "HeangphonMD10", password: "Phon@168", startDate: "2026-4-03", durationDays: 366},
-{ username: "2HeangphonMD10", password: "Phon@168", startDate: "2026-4-03", durationDays: 366},
+  { username: "HeangphonMD10", password: "Phon@168", startDate: "2026-4-03", durationDays: 366},
+  { username: "2HeangphonMD10", password: "Phon@168", startDate: "2026-4-03", durationDays: 366},
   { username: "3HeangphonMD10", password: "Phon@168", startDate: "2026-4-03", durationDays: 366},
   { username: "Vannak1", password: "Nak168168", startDate: "2026-4-03", durationDays: 366},
   { username: "Vannak2", password: "Nak168168", startDate: "2026-4-03", durationDays: 366},
@@ -188,57 +205,56 @@ const USERS = [
   { username: "Chanbopha", password: "bopha123", startDate: "2026-28-03", durationDays: 367},
   { username: "Say", password: "saysay@98", startDate: "2026-28-03", durationDays: 367},
   { username: "Visalkim", password: "010822", startDate: "2026-28-03", durationDays: 367},
-   { username: "Chhorn.Sokay", password: "apple009", startDate: "2026-28-03", durationDays: 367},
+  { username: "Chhorn.Sokay", password: "apple009", startDate: "2026-28-03", durationDays: 367},
   { username: "David12", password: "David1217", startDate: "2026-03-04", durationDays: 90},
-  {username: "Exam26", password: "54321", startDate: "2026-07-04", durationDays: 367},
-  {username: "Heakbunheang", password: "heang123", startDate: "2026-13-04", durationDays: 90},
-  {username: "Mony", password: "Keamony21", startDate: "2026-28-04", durationDays: 367},
-  {username: "soklyr", password: "sokly@#$123", startDate: "2026-19-05", durationDays: 367},
-  {username: "KwangNak", password: "230499", startDate: "2026-20-05", durationDays: 367},
-  {username: "Sokla2", password: "31071999", startDate: "2026-20-05", durationDays: 367},
-  {username: "Sorin", password: "sorin9999", startDate: "2026-23-05", durationDays: 367},
-   {username: "Raksmey", password: "raksmey99", startDate: "2026-23-05", durationDays: 3},
-   {username: "Longpheng", password: "pheng168", startDate: "2026-26-05", durationDays: 367},
-  {username: "Nhemchenda", password: "Chendaa15@", startDate: "2026-28-05", durationDays: 367},
-   {username: "Chansey12@V", password: "Chan12&$", startDate: "2026-28-05", durationDays: 367},
-   {username: "ChincheaCheatta", password: "Cheatta78", startDate: "2026-28-05", durationDays: 367},
-  {username: "KongSovathpanha", password: "Panha", startDate: "2026-28-05", durationDays: 367},
-  {username: "Brokh", password: "Brokh2211", startDate: "2026-29-05", durationDays: 367},
-  {username: "Bilaka", password: "heaty140301", startDate: "2026-29-05", durationDays: 367},
-  {username: "Kaknika", password: "kaknika12", startDate: "2026-01-06", durationDays: 367},
-  {username: "Sethaka", password: "ka1403", startDate: "2026-02-06", durationDays: 834},
-  {username: "Menglong", password: "12345", startDate: "2026-07-06", durationDays: 367},
-  {username: "Kimlay", password: "lay123", startDate: "2026-09-06", durationDays: 367},
-  {username: "Sothyrak", password: "Sothyrak123456", startDate: "2026-24-06", durationDays: 367},
-  {username: "LyNa", password: "Lyna200497", startDate: "2026-25-06", durationDays: 457},
-  {username: "Simnatt", password: "570033", startDate: "2026-06-07", durationDays: 367},
-  {username: "Yoeurtyen", password: "Yen0709", startDate: "2026-06-07", durationDays: 367},
-  {username: "Uklonghor", password: "848550", startDate: "2026-07-07", durationDays: 367},
-  {username: "Seyha", password: "@seyha999", startDate: "2026-07-07", durationDays: 367},
-  {username: "Bunheang", password: "heang168", startDate: "2026-08-07", durationDays: 367},
-  {username: "Sovannarom", password: "7344440", startDate: "2026-08-07", durationDays: 367},
-  {username: "Pengse", password: "123456", startDate: "2026-13-07", durationDays: 367},
-  {username: "laysreynich", password: "123456789", startDate: "2026-15-07", durationDays: 367},
-  {username: "Chamroeun2", password: "chomroeun03/11/1993", startDate: "2026-15-07", durationDays: 367},
-  {username: "Chanreaksmey", password: "mey#2025", startDate: "2026-17-07", durationDays: 367},
-  {username: "Lonponleu", password: "Leu9999", startDate: "2026-17-07", durationDays: 367},
-  {username: "Virakyut", password: "yut168", startDate: "2026-20-07", durationDays: 367},
-  {username: "Lyminh", password: "minh168", startDate: "2026-21-07", durationDays: 367},
-  {username: "Veasna", password: "211220", startDate: "2026-06-08", durationDays: 367},
-  {username: "Lyboromey", password: "mey12345", startDate: "2026-20-08", durationDays: 367},
-  {username: "SOEURAVY", password: "300594", startDate: "2026-27-08", durationDays: 367},
-  {username: "oung_ekreach", password: "20010719", startDate: "2026-03-09", durationDays: 367},
-  {username: "Soksovannaro168", password: "168168@@", startDate: "2026-09-09", durationDays: 367},
-  {username: "Sreypau", password: "Sreypau", startDate: "2026-24-09", durationDays: 367},
-  {username: "Rath", password: "rath@2026", startDate: "2026-21-10", durationDays: 367},
-  {username: "Measpisey", password: "pisey@2026", startDate: "2026-21-10", durationDays: 367},
-  {username: "Panha", password: "1808", startDate: "2026-18-11", durationDays: 367},
+  { username: "Exam26", password: "54321", startDate: "2026-07-04", durationDays: 367},
+  { username: "Heakbunheang", password: "heang123", startDate: "2026-13-04", durationDays: 90},
+  { username: "Mony", password: "Keamony21", startDate: "2026-28-04", durationDays: 367},
+  { username: "soklyr", password: "sokly@#$123", startDate: "2026-19-05", durationDays: 367},
+  { username: "KwangNak", password: "230499", startDate: "2026-20-05", durationDays: 367},
+  { username: "Sokla2", password: "31071999", startDate: "2026-20-05", durationDays: 367},
+  { username: "Sorin", password: "sorin9999", startDate: "2026-23-05", durationDays: 367},
+  { username: "Raksmey", password: "raksmey99", startDate: "2026-23-05", durationDays: 3},
+  { username: "Longpheng", password: "pheng168", startDate: "2026-26-05", durationDays: 367},
+  { username: "Nhemchenda", password: "Chendaa15@", startDate: "2026-28-05", durationDays: 367},
+  { username: "Chansey12@V", password: "Chan12&$", startDate: "2026-28-05", durationDays: 367},
+  { username: "ChincheaCheatta", password: "Cheatta78", startDate: "2026-28-05", durationDays: 367},
+  { username: "KongSovathpanha", password: "Panha", startDate: "2026-28-05", durationDays: 367},
+  { username: "Brokh", password: "Brokh2211", startDate: "2026-29-05", durationDays: 367},
+  { username: "Bilaka", password: "heaty140301", startDate: "2026-29-05", durationDays: 367},
+  { username: "Kaknika", password: "kaknika12", startDate: "2026-01-06", durationDays: 367},
+  { username: "Sethaka", password: "ka1403", startDate: "2026-02-06", durationDays: 834},
+  { username: "Menglong", password: "12345", startDate: "2026-07-06", durationDays: 367},
+  { username: "Kimlay", password: "lay123", startDate: "2026-09-06", durationDays: 367},
+  { username: "Sothyrak", password: "Sothyrak123456", startDate: "2026-24-06", durationDays: 367},
+  { username: "LyNa", password: "Lyna200497", startDate: "2026-25-06", durationDays: 457},
+  { username: "Simnatt", password: "570033", startDate: "2026-06-07", durationDays: 367},
+  { username: "Yoeurtyen", password: "Yen0709", startDate: "2026-06-07", durationDays: 367},
+  { username: "Uklonghor", password: "848550", startDate: "2026-07-07", durationDays: 367},
+  { username: "Seyha", password: "@seyha999", startDate: "2026-07-07", durationDays: 367},
+  { username: "Bunheang", password: "heang168", startDate: "2026-08-07", durationDays: 367},
+  { username: "Sovannarom", password: "7344440", startDate: "2026-08-07", durationDays: 367},
+  { username: "Pengse", password: "123456", startDate: "2026-13-07", durationDays: 367},
+  { username: "laysreynich", password: "123456789", startDate: "2026-15-07", durationDays: 367},
+  { username: "Chamroeun2", password: "chomroeun03/11/1993", startDate: "2026-15-07", durationDays: 367},
+  { username: "Chanreaksmey", password: "mey#2025", startDate: "2026-17-07", durationDays: 367},
+  { username: "Lonponleu", password: "Leu9999", startDate: "2026-17-07", durationDays: 367},
+  { username: "Virakyut", password: "yut168", startDate: "2026-20-07", durationDays: 367},
+  { username: "Lyminh", password: "minh168", startDate: "2026-21-07", durationDays: 367},
+  { username: "Veasna", password: "211220", startDate: "2026-06-08", durationDays: 367},
+  { username: "Lyboromey", password: "mey12345", startDate: "2026-20-08", durationDays: 367},
+  { username: "SOEURAVY", password: "300594", startDate: "2026-27-08", durationDays: 367},
+  { username: "oung_ekreach", password: "20010719", startDate: "2026-03-09", durationDays: 367},
+  { username: "Soksovannaro168", password: "168168@@", startDate: "2026-09-09", durationDays: 367},
+  { username: "Sreypau", password: "Sreypau", startDate: "2026-24-09", durationDays: 367},
+  { username: "Rath", password: "rath@2026", startDate: "2026-21-10", durationDays: 367},
+  { username: "Measpisey", password: "pisey@2026", startDate: "2026-21-10", durationDays: 367},
+  { username: "Panha", password: "1808", startDate: "2026-18-11", durationDays: 367},
 
   //----Renew Account-----
   { username: "Resovan", password: "sovan@2025", startDate: "2025-11-11", durationDays: 1100 },
   { username: "Sovan", password: "11112222", startDate: "2026-20-11", durationDays: 800},
 
-  
   //------laboratory accounts-----
   { username: "Test", password: "test@2026", startDate: "2026-29-05", durationDays: 3 },
   { username: "Test02", password: "Smey1994", startDate: "2026-01-08", durationDays: 30 }
@@ -249,9 +265,18 @@ const USERS = [
   const db = loadDB();
   if (!db.users) db.users = {};
 
+  // សម្អាត Key ចាស់ៗដែលគ្មានទម្រង់ username:::password ដើម្បីកុំឲ្យជាន់គ្នា
+  for (const oldKey in db.users) {
+    if (!oldKey.includes(":::")) {
+      delete db.users[oldKey];
+    }
+  }
+
   USERS.forEach(u => {
-    if (!db.users[u.username]) {
-      db.users[u.username] = {
+    const key = getUserKey(u.username, u.password);
+    if (!db.users[key]) {
+      db.users[key] = {
+        username: u.username,
         password: u.password,
         deviceId: null,
         sessionToken: null,
@@ -263,16 +288,15 @@ const USERS = [
         startDate: u.startDate || null,
         durationDays: u.durationDays || 365,
         lastUrl: null,
-        // NEW: ផ្ទុកព័ត៌មានឧបករណ៍
         deviceInfo: null,
         pendingDeviceInfo: null
       };
     } else {
-      db.users[u.username].password = u.password;
-      if (!db.users[u.username].startDate) db.users[u.username].startDate = u.startDate || null;
-      if (!db.users[u.username].durationDays) db.users[u.username].durationDays = u.durationDays || 365;
-      // Ensure lastUrl exists
-      if (db.users[u.username].lastUrl === undefined) db.users[u.username].lastUrl = null;
+      db.users[key].username = u.username;
+      db.users[key].password = u.password;
+      if (!db.users[key].startDate) db.users[key].startDate = u.startDate || null;
+      if (!db.users[key].durationDays) db.users[key].durationDays = u.durationDays || 365;
+      if (db.users[key].lastUrl === undefined) db.users[key].lastUrl = null;
     }
   });
 
@@ -302,10 +326,17 @@ app.post("/login", (req, res) => {
     return res.json({ success: false, message: "Missing inputs" });
 
   const db = loadDB();
-  const user = db.users[username];
+  const key = getUserKey(username, password);
+  const user = db.users[key];
 
-  if (!user) return res.json({ success: false, message: "Invalid username" });
-  if (user.password !== password) return res.json({ success: false, message: "Wrong password" });
+  // បើរកមិនឃើញគូ Username + Password ទេ ពិនិត្យមើលថាតើ Username មានឬអត់ ដើម្បីបង្ហាញ Message ឲ្យត្រឹមត្រូវ
+  if (!user) {
+    const usernameExists = Object.values(db.users).some(u => u.username === username);
+    if (!usernameExists) {
+      return res.json({ success: false, message: "Invalid username" });
+    }
+    return res.json({ success: false, message: "Wrong password" });
+  }
 
   // CHECK EXPIRATION
   if (isExpired(user)) {
@@ -337,28 +368,28 @@ app.post("/login", (req, res) => {
   if (!user.deviceId) {
     user.deviceId = deviceId;
     user.sessionToken = genToken();
-    user.deviceInfo = currentDeviceInfo; // រក្សាទុកព័ត៌មានឧបករណ៍
+    user.deviceInfo = currentDeviceInfo;
     user.status = "active";
     saveDB(db);
     return res.json({ 
       success: true, 
       token: user.sessionToken, 
       expireAt: expireTimestamp(user),
-      lastUrl: user.lastUrl // Send saved URL
+      lastUrl: user.lastUrl
     });
   }
 
   // SAME DEVICE LOGIN
   if (user.deviceId === deviceId) {
     if (!user.sessionToken) user.sessionToken = genToken();
-    user.deviceInfo = currentDeviceInfo; // Update ព័ត៌មានឧបករណ៍
+    user.deviceInfo = currentDeviceInfo;
     user.status = "active";
     saveDB(db);
     return res.json({ 
       success: true, 
       token: user.sessionToken, 
       expireAt: expireTimestamp(user),
-      lastUrl: user.lastUrl // Send saved URL
+      lastUrl: user.lastUrl
     });
   }
 
@@ -366,7 +397,7 @@ app.post("/login", (req, res) => {
   user.status = "pending";
   user.waitingDevice = deviceId;
   user.requestId = genToken();
-  user.pendingDeviceInfo = currentDeviceInfo; // ផ្ទុកព័ត៌មានអ្នកដែលព្យាយាមចូលថ្មី
+  user.pendingDeviceInfo = currentDeviceInfo;
   saveDB(db);
 
   return res.json({
@@ -383,12 +414,12 @@ app.post("/update-progress", (req, res) => {
   if (!username || !token || !url) return res.json({ success: false });
 
   const db = loadDB();
-  const user = db.users[username];
+  const user = findUserByUsernameAndToken(db, username, token);
 
-  // Security check: Match token
-  if (user && user.sessionToken === token) {
+  // Security check: Match username & token
+  if (user) {
     user.lastUrl = url;
-    user.lastActive = Date.now(); // Also update activity
+    user.lastActive = Date.now();
     saveDB(db);
     return res.json({ success: true });
   }
@@ -402,25 +433,25 @@ app.post("/check-requests", (req, res) => {
   const { username, token } = req.body;
 
   const db = loadDB();
-  const user = db.users[username];
+  const user = findUserByUsernameAndToken(db, username, token);
 
   if (user) {
-    // ត្រួតពិនិត្យ Token បើខុសបញ្ជាឲ្យ Logout ភ្លាមៗ មិនឲ្យ Update lastActive ទេ
-    if (user.sessionToken && user.sessionToken !== token) {
-      return res.json({ success: false, forceLogout: true, message: "Invalid token" });
-    }
-
     const now = Date.now();
-    // Only update lastActive if recent activity
     if (now - user.lastActive > 10000) {
       user.lastActive = now;
       saveDB(db);
     }
 
     if (user.status === "pending") {
-      // បញ្ជូនព័ត៌មានឧបករណ៍ថ្មីទៅឲ្យ Device ចាស់បានដឹង
       return res.json({ hasRequest: true, requestId: user.requestId, deviceInfo: user.pendingDeviceInfo });
     }
+
+    return res.json({ hasRequest: false });
+  }
+
+  // ប្រសិនបើមានបញ្ជូន token មក តែរកមិនឃើញគណនីដែលត្រូវនឹង token នោះទេ បញ្ជាឲ្យ Logout
+  if (username && token) {
+    return res.json({ success: false, forceLogout: true, message: "Invalid token" });
   }
 
   return res.json({ hasRequest: false });
@@ -431,12 +462,15 @@ app.post("/approve", (req, res) => {
   const { username, requestId } = req.body;
 
   const db = loadDB();
-  const user = db.users[username];
+  // ស្វែងរកតាម username និង requestId ដើម្បីច្បាស់ថាចំគណនីដែលកំពុងស្នើសុំពិតប្រាកដ
+  const user = Object.values(db.users).find(
+    u => u.username === username && u.requestId === requestId
+  );
 
-  if (user && user.requestId === requestId) {
+  if (user) {
     user.deviceId = user.waitingDevice;
-    user.sessionToken = genToken(); // បង្កើត Token ថ្មី (ពេលនេះ Device ចាស់នឹងត្រូវទាត់ចេញព្រោះ Token ខុសគ្នា)
-    user.deviceInfo = user.pendingDeviceInfo; // ប្តូរទៅប្រើ Device ថ្មីជាផ្លូវការ
+    user.sessionToken = genToken();
+    user.deviceInfo = user.pendingDeviceInfo;
     user.status = "active";
     user.waitingDevice = null;
     user.requestId = null;
@@ -450,21 +484,28 @@ app.post("/approve", (req, res) => {
 
 // === DECLINE ===
 app.post("/decline", (req, res) => {
-  const { username } = req.body;
+  const { username, requestId } = req.body;
 
   const db = loadDB();
-  const user = db.users[username];
+  // រកគណនីដែលកំពុងមាន status "pending" របស់ username នោះ (ឬផ្ទៀង requestId បើមាន)
+  const user = Object.values(db.users).find(
+    u => u.username === username && (requestId ? u.requestId === requestId : u.status === "pending")
+  );
 
-  user.declineMessage =
-    "Sorry! Account owner did not approve. សូមទោស! ម្ចាស់គណនីមិនអនុញ្ញាតទេ។";
+  if (user) {
+    user.declineMessage =
+      "Sorry! Account owner did not approve. សូមទោស! ម្ចាស់គណនីមិនអនុញ្ញាតទេ។";
 
-  user.status = "active";
-  user.waitingDevice = null;
-  user.requestId = null;
-  user.pendingDeviceInfo = null;
+    user.status = "active";
+    user.waitingDevice = null;
+    user.requestId = null;
+    user.pendingDeviceInfo = null;
 
-  saveDB(db);
-  return res.json({ success: true });
+    saveDB(db);
+    return res.json({ success: true });
+  }
+
+  return res.json({ success: false });
 });
 
 // === LOGOUT ===
@@ -480,7 +521,6 @@ app.post("/logout", (req, res) => {
       u.sessionToken = null;
       u.deviceId = null;
       u.status = "logged_out";
-      // We do NOT clear lastUrl on logout, so they can resume later
       saveDB(db);
       return res.json({ success: true });
     }
