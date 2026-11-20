@@ -252,7 +252,8 @@ const USERS = [
   { username: "Panha", password: "1808", startDate: "2026-18-11", durationDays: 367},
 
   //----Renew Account-----
-  { username: "Resovan", password: "sovan@2025", startDate: "2025-11-11", durationDays: 1100 },
+  { username: "Reovan", password: "sovan@2025", startDate: "2025-11-11", durationDays: 1100 },
+  { username: "Sovan", password: "sovan@2025", startDate: "2025-11-11", durationDays: 1100 },
   { username: "Sovan", password: "11112222", startDate: "2026-20-11", durationDays: 800},
 
   //------laboratory accounts-----
